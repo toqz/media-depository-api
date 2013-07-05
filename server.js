@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express')
+    , fs = require('fs')
     // wines = require('./routes/wines');
  
 // console.log("process.env.NODE_ENV", process);
@@ -51,18 +52,20 @@ var db = mongoose.connection;
 //   })
 //   
 // });
-
  
 // bootstrap models
-// var models_path = __dirname + '/app/models'
-// fs.readdirSync(models_path).forEach(function (file) {
-//   if (~file.indexOf('.js')) require(models_path + '/' + file)
-// })
-
+var models_path = __dirname + '/app/models'
+fs.readdirSync(models_path).forEach(function (file) {
+  if (~file.indexOf('.js')) require(models_path + '/' + file)
+})
 
 var app = express();
 // express settings
-// require('./config/express')(app, config, passport)
+require('./config/express')(app, config)
+
+// Bootstrap routes
+require('./config/routes')(app)
+
  
 // Start the app by listening on <port>
 var port = process.env.PORT || 5000;

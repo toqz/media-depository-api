@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "express": "latest",
-    "mongoose": "latest"
+    "mongoose": "latest",
+    "connect-mongo": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
