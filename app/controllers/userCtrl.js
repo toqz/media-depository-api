@@ -15,8 +15,6 @@ var mongoose = require('mongoose')
 //   , User = mongoose.model('User')
 //   , utils = require('../../lib/utils')  // ??? handling errors
 
-
-  
   
 /**
  *  get all user
