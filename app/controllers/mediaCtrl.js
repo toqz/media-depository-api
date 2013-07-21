@@ -10,30 +10,33 @@ var mongoose = require('mongoose')
  *  get all user
  */
 exports.all = function (req, res) {
-  
+  var results = {};
   Media.find(function (err, allMedia) {
-    // console.log(allMedia);
-    res.send(allMedia);
-    // if (err) // TODO handle err
-    // console.log(kittens)
+    results.media = allMedia;
+    res.send(results);
   })
 }
 
 exports.add = function(req, res) {
 
-  var title = req.params.title;
+  var data = req.body;
 
-  if(title){
+  if(data){
 
-    m = new Media({
-      src: title
-    });
+    var media = new Media(data);
 
-    m.save(function(err, m) {
-      res.send('save error:'+err);
+    media.save(function(err, m) {
+      console.log('error:', err);
+      console.log('m:', m);
+      if(err){
+        res.send({success: 'false'})
+      }else{
+        res.send({success: 'true'});  
+      }
+      
     });
   }
-
+ 
 }
 
 /**

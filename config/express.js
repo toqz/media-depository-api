@@ -4,7 +4,7 @@
  */
 
 var express = require('express')
-  , mongoStore = require('connect-mongo')(express)
+  // , mongoStore = require('connect-mongo')(express)
   // , helpers = require('view-helpers')  // don't need this yet
   , pkg = require('../package.json')
 
@@ -20,6 +20,9 @@ module.exports = function (app, config) {
     app.use(express.logger('dev'))
   }
   
+  // parsing POST data
+  app.use(express.bodyParser());
+
   // app.configure(function () {
   //   
   //   // express/mongo session storage
