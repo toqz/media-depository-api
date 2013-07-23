@@ -21,10 +21,11 @@ module.exports = function (app, config) {
   }
   
   // parsing POST data
-  app.use(express.bodyParser());
+  app.configure(function () {
+    
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
 
-  // app.configure(function () {
-  //   
   //   // express/mongo session storage
   //   app.use(express.session({
   //     secret: 'noobjs',
@@ -35,13 +36,16 @@ module.exports = function (app, config) {
   //   }))
   //   
   //   // routes should be at the last
-  //   app.use(app.router)
+    
+    app.use(app.router);
+
   //       
   // })
   // 
   // // development env config
   // app.configure('development', function () {
   //   app.locals.pretty = true
-  // })
+
+  });
 
 }

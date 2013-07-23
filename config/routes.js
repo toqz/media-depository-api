@@ -26,12 +26,13 @@ module.exports = function (app) {
     next();
   });
 
-  app.get('/users', users.all)
-  app.get('/me', users.me)
+  app.get('/users', users.all);
+  app.get('/me', users.me);
 
-  app.get('/media', media.all)
-  app.get('/media/:searchparam', media.findOne)
-  app.post('/addmedia', media.add)
-  app.delete('/deletemedia/:id', media.remove)
+  app.get('/media', media.all);
+  app.get('/media/:searchparam', media.findOne);
+  app.post('/media', media.add);
+  app.delete('/media/:id', media.remove);
+  app.put('/media/:id', media.update);
   
 }

@@ -24,8 +24,14 @@ var mediaSchema = new Schema({
   idVal: {type: String, default: ''},
   title: {type: String, default: ''},
   url: {type: String, default: ''},
-  poster: {type: String, default: ''}
-})
+  poster: {type: String, default: ''},
+  authors: {type: String, default: ''},
+  rating: {type: Number, default: 0},
+  dateRead: {type: Date, default: Date.now},
+  dateAdded: {type: Date, default: Date.now},
+  status: {type: String, default: 'new'},
+  userid: {type: String, default: 'u0000'}
+});
 
 
 /**

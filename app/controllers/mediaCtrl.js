@@ -6,8 +6,9 @@ var mongoose = require('mongoose')
   , Media = mongoose.model("Media")
   , utils = require('util')
 
+
 /**
- *  get all user
+ *  get all media
  */
 exports.all = function (req, res) {
   var results = {};
@@ -17,6 +18,10 @@ exports.all = function (req, res) {
   })
 }
 
+
+/**
+ *  Add media
+ */
 exports.add = function(req, res) {
 
   var data = req.body;
@@ -26,8 +31,7 @@ exports.add = function(req, res) {
     var media = new Media(data);
 
     media.save(function(err, m) {
-      console.log('error:', err);
-      console.log('m:', m);
+
       if(err){
         res.send({success: 'false'})
       }else{
@@ -40,7 +44,7 @@ exports.add = function(req, res) {
 }
 
 /**
- *  get one user
+ *  Get media with id: id
  */
 exports.findOne = function (req, res) {
   
@@ -69,32 +73,80 @@ exports.findOne = function (req, res) {
 
 
 /**
- *  get one user
+ *  Delete Media with id: id
  */
 exports.remove = function (req, res) {
-  
-  var mediaId = req.params.id
-      , searchExp = new RegExp("'"+mediaId+"'");
+  var response = {}  
+    , mediaId = req.params.id;
 
-      // console.log('searchExp', searchExp);
+  return Media.findById(mediaId, function(err, results) {
 
-    Media.findById(mediaId, function(err, results) {
+    if (results){
 
-      if(err) {
-        res.send('error: ' + err);
-        return; 
-      }
+      return results.remove(function() {
 
-      if(results)
-        Media.remove({_id:mediaId}, function(err) {
-            
-          if(err) {
-            res.send('error removing: ' + err)
-            return;
-          };
-          
-          res.send('remove succes')
-        })
+        if(! err) {
+        
+         res.send('');
+        
+        }else{
+        
+          console.log(err);
+        
+        }
 
-    });
+      });
+
+    }else{
+
+      response.success = 'false';
+      res.send(response);
+
+    }
+    
+  })
+
+}
+
+
+/**
+ *  Update Media
+ */
+exports.update = function (req, res) {
+  var response = {}  
+    , mediaId = req.params.id
+    , data = req.body;
+
+
+  return Media.findById(mediaId, function(err, media) {
+    
+    media.rating = data.rating;
+
+    if (media){
+
+      return media.save(function() {
+
+        if(! err) {
+        
+         console.log('updated');
+        
+        }else{
+        
+          console.log(err);
+        
+        }
+
+        res.send(media);
+
+      });
+
+    }else{
+
+      response.success = 'false';
+      res.send(response);
+
+    }
+    
+  })
+
 }
