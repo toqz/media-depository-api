@@ -11,11 +11,34 @@ var mongoose = require('mongoose')
  *  get all media
  */
 exports.all = function (req, res) {
-  var results = {};
-  Media.find(function (err, allMedia) {
-    results.media = allMedia;
-    res.send(results);
-  })
+  
+  var response = {},
+      limit = req.query.limit,
+      skip = req.query.skip,
+      total=0;
+
+  console.log('params', req.query);
+
+  Media.count(function(err, count) {
+    response.total = count;
+
+    Media
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .exec(function(err, results) {
+
+        if(! err){
+          // response.total = total;
+          response.results=results;
+          res.send(response);
+        }else{
+          response.error=err;
+          res.send(response);
+        }
+      });
+  });
+
 }
 
 
